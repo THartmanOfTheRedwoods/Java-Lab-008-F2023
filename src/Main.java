@@ -23,7 +23,7 @@ public class Main {
                     okay = false;
                 }
             } while (okay); {
-                String input = s.nextLine();
+                String input = s.nextLine(;
             // Reference Java-Assignment-003 to see how to use the java.nio libraries to turn a String path into a File
                 Path path = Path.of(input);
             // Ask the user if they would like to skip whitespace
