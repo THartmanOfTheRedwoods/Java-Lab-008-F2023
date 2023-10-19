@@ -8,16 +8,27 @@ public class Main {
 
     public static void main(String[] args) {
         // Create a scanner object
-
+        Scanner s = new Scanner(System.in);
+        boolean okay;
         // Write a loop that will ask the user to enter a file path to gather stats on,
         // and continue until "Q" is entered.
-
+        blank: while (true) {
+            System.out.println("Enter the path to a file or Q to quit: ");
+            do {
+                if(s.hasNext("Q")) {
+                    break blank;
+                } else if (s.hasNextLine()) {
+                    okay = true;
+                } else {
+                    okay = false;
+                }
+            } while (okay); {
+                String input = s.nextLine();
             // Reference Java-Assignment-003 to see how to use the java.nio libraries to turn a String path into a File
-
+                Path path = Path.of(input);
             // Ask the user if they would like to skip whitespace
-
+                System.out.println("Should we skip whitespace? (y/n): ");
             // Create a variable called skipWs that stores the user's response as a boolean
-
             /*
              * Within this try/catch block, which is used to handle possible errors thrown by the code in the try block,
              * write code to get the line, word, and character count of the File object created above!
