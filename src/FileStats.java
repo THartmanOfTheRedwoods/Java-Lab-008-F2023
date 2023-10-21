@@ -8,7 +8,7 @@ public class FileStats {
     private File f;
 
     // **You will need to complete the FileStats class's constructor, so you can create FileStats objects**
-    public FileStats(File f, boolean skipWhiteSpace) throws IOException {
+    public FileStats(File f, boolean skipWhiteSpace) throws FileNotFoundException {
         /*
          * Use the File objects exists method to determine if the File passed in actually exists.
          * If it does not exist, throw the FileNotFoundException as shown below:
@@ -19,9 +19,11 @@ public class FileStats {
             throw new FileNotFoundException(String.format("File: %s does not exist.", f.getName()));
         }
         // Initialize FileStats' instance variables.
-        read(f);
-        read();
-        countChars()
+        this.skipWhiteSpace = skipWhiteSpace;
+        this.numChars = 0;
+        this.numWords = 0;
+        this.numLines = 0;
+        this.f = f;
     }
 
     // **You will need to call this method!!!**
@@ -66,14 +68,13 @@ public class FileStats {
         // 3. Return the count of characters.
         //    a. HINT: If whitespace isn't being skipped, a newline character (i.e. \n) counts as a character.
         if (skipWhiteSpace) {
-            return numChars;
+            numChars++;
         }
-        else {
-            return numChars + 1;
-        }
+        return numChars;
     }
 
     // An overloaded method for the read method you will be writing!
+    @SuppressWarnings("DuplicateThrows")
     public void read(File f) throws FileNotFoundException, IOException {
         if( !f.exists() ) {
             throw new FileNotFoundException(String.format("File: %s does not exist.", f.getName()));
@@ -84,11 +85,13 @@ public class FileStats {
 
     // **You will need to implement this method.**
     // This method should use the java.io.BufferedReader class to efficiently read the File object line-by-line
+    @SuppressWarnings("DuplicateThrows")
     public void read() throws FileNotFoundException, IOException {
         // 1. Create a BufferedReader object: BufferedReader is a Java class that is very efficient at reading input due
         //    to its buffering mechanisms.
         FileReader fr = new FileReader(getFileName());
         BufferedReader br = new BufferedReader(fr);
+
         //    a. HINT: BufferReader's Constructor takes another Reader as an argument. Consider FileReader
         //    b. REF: https://www.geeksforgeeks.org/java-io-bufferedreader-class-java/
         // 2. Create a loop that uses your BufferedReader object to read the contents of your File object line-by-line
@@ -99,8 +102,8 @@ public class FileStats {
         String line;
         while((line = br.readLine()) != null) {
             numLines++;
-            numWords=line.split(" ").length;
-            numChars += line.length();
+            numChars += countChars(line,skipWhiteSpace);
+            numWords += countWords(line);
         }
         this.numLines = numLines;
         this.numChars = numChars;
