@@ -15,6 +15,7 @@ public class FileStats {
          *
          * throw new FileNotFoundException(String.format("File: %s does not exist.", f.getName()));
          */
+        FileStats.countChars(numChars);
 
         // Initialize FileStats' instance variables.
     }
@@ -49,12 +50,28 @@ public class FileStats {
     // This method should take a line and count the number of characters in that line.
     private static int countChars(String line, boolean skipWhiteSpace) {
         // 1. If skipWhiteSpace is true, use the removeSpaces method to remove whitespace from the line.
+        int stats = 0;
+        while (skipWhiteSpace == true){
+            stats = Integer.parseInt(removeSpaces(line));
+            return stats;
 
+        }for (int j = 0; j < stats; j++){
+            return j;
+        }
+        while (skipWhiteSpace == false){
+            break;
+        }
         // 2. Now write a loop to count the number of characters in the line.
         //    a. HINT: to get the length of a String, use its .length() method!
+        int charCount = 0;
+        for (int i = 0; i < line.length(); i++){
+            charCount++;
+        }return charCount;
 
         // 3. Return the count of characters.
         //    a. HINT: If whitespace isn't being skipped, a newline character (i.e. \n) counts as a character.
+
+
     }
 
     // An overloaded method for the read method you will be writing!

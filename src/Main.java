@@ -1,16 +1,31 @@
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.net.URI;
+import java.nio.file.*;
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
         // Create a scanner object
-
+        Scanner in = new Scanner(System.in);
         // Write a loop that will ask the user to enter a file path to gather stats on,
         // and continue until "Q" is entered.
+        public static void filePath(){
+            System.out.println("Enter a file path to gather stats on and \"Q\" to quit: ");
+            String input = in.nextLine();
+            while (!(input.equalsIgnoreCase("Q"))) {
+                Path f = Paths.get(input);
+                System.out.println("Would you like to skip whitespace? y/n ");
+                if (in.nextLine().equals("y")){
+                    boolean skipWhiteSpace = true;
+                    break;
+                }else if (in.nextLine().equals("n")) {
+                    boolean skipWhiteSpace = false;
+                    break;
+                }
+            }
+        }
 
             // Reference Java-Assignment-003 to see how to use the java.nio libraries to turn a String path into a File
 
@@ -24,6 +39,8 @@ public class Main {
              */
             try {
                 // You will need to create a FileStats object by passing it the File object and your skipWs variable as args
+                FileStats file = new FileStats(f, skipWhiteSpace);
+
 
                 // You will need to call the fs.read method, which you need to implement!
 
