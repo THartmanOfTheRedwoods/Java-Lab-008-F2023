@@ -14,15 +14,17 @@ public class Main {
 
     // Create a scanner object
     Scanner s = new Scanner(System.in);
+        filePath = "resources/TEST.txt";
 
+        System.out.println("");
 
-    // Write a loop that will ask the user to enter a file path to gather stats on,
-    // and continue until "Q" is entered.
-    while (!(filePath.equalsIgnoreCase("Q")) ) {
+        // Write a loop that will ask the user to enter a file path to gather stats on,
+        // and continue until "Q" is entered.
+        while (!filePath.equalsIgnoreCase("Q")) {
 
-        //Copied from Assignment 3
-        filePath = s.nextLine();                               //user input
-        File file = new File(filePath);                               //File object created
+            //Copied from Assignment 3
+            filePath = s.nextLine();                               //user input
+            File file = new File(filePath);                        //File object created
 
         break;
     }
@@ -42,6 +44,9 @@ public class Main {
             System.out.println("Please enter \"Y\" or \"N\"\n");
         }
     }
+        Path.of(filePath);
+        File file = new File(filePath);
+
 
 
         /*
