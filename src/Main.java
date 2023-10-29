@@ -12,6 +12,7 @@ public class Main {
     private static String filePath;
     private static boolean skipWs;
     private static File file;
+    private static String outputScript = "Stats: lines - %d, words - %d, chars - %d %s";
 
 
     public static void main(String[] args) {
@@ -33,17 +34,22 @@ public class Main {
     System.out.println("Skip whitespace? Y/N");
     userString = s.nextLine();
 
-    while (Optional.of(skipWs).isEmpty())        {
+    while (true) {
         if (userString.equalsIgnoreCase("N")) {
             skipWs = false;
+            break;
         } else if (userString.equalsIgnoreCase("Y")) {
             skipWs = true;
+            break;
         } else {
             System.out.println("Please enter \"Y\" or \"N\"\n");
+            userString = s.nextLine();
         }
+        System.out.println("loop");         //scaffold
     }
 
             try {
+                System.out.println(skipWs);     //scaffold
                 FileStats fs = new FileStats(file, skipWs);
                 fs.read(file);
 
@@ -53,6 +59,7 @@ public class Main {
                  *
                  * Stats: lines - 6, words - 46, chars - 237 /path/to/file/fileName.txt
                  */
+                System.out.printf(outputScript, fs.getNumLines(), fs.getNumWords(), fs.getNumChars(), fs.getFileName());
 
             } catch (IOException e) {
                 System.err.println(e.getMessage());
