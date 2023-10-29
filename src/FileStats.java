@@ -17,8 +17,6 @@ public class FileStats {
         this.numLines = 0;
         this.numWords = 0;
         this.numChars = 0;
-
-        countWords("The quick brown fox jumps over a lazy dog");
     }
 
     private static int countWords(String line) {
@@ -63,12 +61,13 @@ public class FileStats {
     }
 
     public void read() throws FileNotFoundException, IOException {
-
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(f))) {
-            //String line = "";
-            while (bufferedReader.readLine() != null)
-                //line = bufferedReader.readLine();
-                System.out.println(bufferedReader.readLine());
+            String line = bufferedReader.readLine();
+
+            while (line != null) {
+                System.out.println(line);
+                line = bufferedReader.readLine();
+            }
         }
 
 
