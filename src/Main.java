@@ -18,18 +18,12 @@ public class Main {
     public static void main(String[] args) {
     Scanner s = new Scanner(System.in);
     System.out.println("Enter filepath");
-    filePath = s.nextLine();                               //user input
+    filePath = s.nextLine();
 
-        // Write a loop that will ask the user to enter a file path to gather stats on,
-        // and continue until "Q" is entered.
         while (!filePath.equalsIgnoreCase("Q")) {
-
-            //Copied from Assignment 3
-            filePath = "resources/TEST.txt";        //scaffold
-            file = new File(filePath);                        //File object created
-
-        break;
-    }
+            file = new File(filePath);
+            break;
+        }
 
     System.out.println("Skip whitespace? Y/N");
     userString = s.nextLine();
@@ -45,22 +39,12 @@ public class Main {
             System.out.println("Please enter \"Y\" or \"N\"\n");
             userString = s.nextLine();
         }
-        System.out.println("loop");         //scaffold
     }
 
             try {
-                System.out.println(skipWs);     //scaffold
                 FileStats fs = new FileStats(file, skipWs);
                 fs.read(file);
-
-                /*
-                 * You will access the FileStats object's getter methods to get the file's line, word, character count and
-                 * the files name. You should use a format specifier to print it all out similar to the following example:
-                 *
-                 * Stats: lines - 6, words - 46, chars - 237 /path/to/file/fileName.txt
-                 */
                 System.out.printf(outputScript, fs.getNumLines(), fs.getNumWords(), fs.getNumChars(), fs.getFileName());
-
             } catch (IOException e) {
                 System.err.println(e.getMessage());
             }

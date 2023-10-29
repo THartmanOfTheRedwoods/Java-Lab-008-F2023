@@ -32,24 +32,10 @@ public class FileStats {
 
     }
 
-
     private static int countChars(String line, boolean skipWhiteSpace) {
-        int numChars = 0;
-
         if (skipWhiteSpace) {
             line = removeSpaces(line);
         }
-
-        // 2. Now write a loop to count the number of characters in the line.
-        //    a. HINT: to get the length of a String, use its .length() method!
-        numChars = line.length();
-
-        // 3. Return the count of characters.
-        //    a. HINT: If whitespace isn't being skipped, a newline character (i.e. \n) counts as a character.
-        if (!skipWhiteSpace) {
-
-        }
-
         return line.length();
     }
 
@@ -62,32 +48,15 @@ public class FileStats {
     }
 
     public void read() throws FileNotFoundException, IOException {
-        System.out.println(skipWhiteSpace);     //scaffold
-
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(f))) {
             String line;
-
             while ((line = bufferedReader.readLine()) != null) {
                 numWords += countWords(line);
-                System.out.println(numWords);       //scaffold
                 numLines++;
-                line = removeSpaces(line);
+                numChars += countChars(line, skipWhiteSpace);
                 }
-
-            /*if (skipWhiteSpace) {
-             */
-                System.out.println(line);             //scaffold
-                line = bufferedReader.readLine();     //scaffold
             }
         }
-
-
-
-        // 2. Create a loop that uses your BufferedReader object to read the contents of your File object line-by-line
-        //    and within the loop count the file's lines, words, and characters. Store them in the FileStats class's
-        //    instance variables, so you can retrieve them in your main method.
-        //    a. HINT: BufferedReader has a readLine method!!!
-
 
     public int getNumLines() {
         return numLines;
