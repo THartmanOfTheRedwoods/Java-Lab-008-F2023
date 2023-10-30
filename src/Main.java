@@ -1,41 +1,86 @@
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class Main {
 
+    private static String userString;
+    private static String filePath;
+    private static boolean skipWs;
+    private static boolean repeatProgram;
+    private static File file;
+    private static String outputScript = "Stats: lines - %d, words - %d, chars - %d %s%n";
+    private static Scanner s = new Scanner(System.in);
+
+    private static final String[][] fileNameAndPath = {
+        {"Sisko's Sin", "resources/Sisko's Sin"},
+        {"Yar's Farewell", "resources/Yar's Farewell"},
+        {"Janeway's Mission", "resources/Janeway's Mission"},
+        {"Picard's Resolve", "resources/Picard's Resolve"},
+        {"Quark's Bluff", "resources/Quark's Bluff"}
+    };
+
+    public static void fileSelection() {
+        System.out.println("--Select a passage--");
+        for (int i = 0; i < fileNameAndPath.length; i++) {
+            System.out.printf("\"%d\": %s%n", i + 1, fileNameAndPath[i][0]);
+        }
+        filePath = fileNameAndPath[Integer.parseInt(s.nextLine()) - 1][1];
+        file = new File(filePath);
+    }
+    
+    public static boolean repeatOption() {
+        String input = "";
+        while (!input.equalsIgnoreCase("Y") && !input.equalsIgnoreCase("N")) {
+            System.out.println("Select another text? Y/N");
+            input = s.nextLine();
+            switch (input.toUpperCase()) {
+                case "Y":
+                    repeatProgram = true;
+                    break;
+                case "N":
+                    repeatProgram = false;
+                    break;
+                default:
+                    System.out.println("Invalid choice.");
+            }
+        }
+        return repeatProgram;
+    }
+
+    public static void whiteSpaceSelection() {
+        System.out.println("Skip whitespace? Y/N");
+        userString = s.nextLine();
+        while (true) {
+            if (userString.equalsIgnoreCase("N")) {
+                skipWs = false;
+                break;
+            } else if (userString.equalsIgnoreCase("Y")) {
+                skipWs = true;
+                break;
+            } else {
+                System.out.println("Please enter \"Y\" or \"N\"\n");
+                userString = s.nextLine();
+            }
+        }
+    }
+
+    public static void launchProgram() {
+        fileSelection();
+        whiteSpaceSelection();
+    }
+
     public static void main(String[] args) {
-        // Create a scanner object
-
-        // Write a loop that will ask the user to enter a file path to gather stats on,
-        // and continue until "Q" is entered.
-
-            // Reference Java-Assignment-003 to see how to use the java.nio libraries to turn a String path into a File
-
-            // Ask the user if they would like to skip whitespace
-
-            // Create a variable called skipWs that stores the user's response as a boolean
-
-            /*
-             * Within this try/catch block, which is used to handle possible errors thrown by the code in the try block,
-             * write code to get the line, word, and character count of the File object created above!
-             */
+        launchProgram();
             try {
-                // You will need to create a FileStats object by passing it the File object and your skipWs variable as args
-
-                // You will need to call the fs.read method, which you need to implement!
-
-                /*
-                 * You will access the FileStats object's getter methods to get the file's line, word, character count and
-                 * the files name. You should use a format specifier to print it all out similar to the following example:
-                 *
-                 * Stats: lines - 6, words - 46, chars - 237 /path/to/file/fileName.txt
-                 */
+                FileStats fs = new FileStats(file, skipWs);
+                fs.read(file);
+                System.out.printf(outputScript, fs.getNumLines(), fs.getNumWords(), fs.getNumChars(), fs.getFileName());
             } catch (IOException e) {
                 System.err.println(e.getMessage());
             }
-
+            if (repeatOption()) {
+                launchProgram();
+            }
     }
 }
