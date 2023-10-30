@@ -13,10 +13,11 @@ public class Main {
     private static Scanner s = new Scanner(System.in);
 
     private static final String[][] fileNameAndPath = {
-        {"Test.txt", "resources/TEST.txt"},
         {"Sisko's Sin", "resources/Sisko's Sin"},
+        {"Yar's Farewell", "resources/Yar's Farewell"},
         {"Janeway's Mission", "resources/Janeway's Mission"},
-        {"Yar's Farewell", "resources/Yar's Farewell"}
+        {"Picard's Resolve", "resources/Picard's Resolve"},
+        {"Quark's Bluff", "resources/Quark's Bluff"}
     };
 
     public static void fileSelection() {
