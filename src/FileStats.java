@@ -8,6 +8,7 @@ public class FileStats {
     private File f;
 
     // **You will need to complete the FileStats class's constructor, so you can create FileStats objects**
+
     public FileStats(File f, boolean skipWhiteSpace) throws FileNotFoundException {
         /*
          * Use the File objects exists method to determine if the File passed in actually exists.
@@ -15,7 +16,14 @@ public class FileStats {
          *
          * throw new FileNotFoundException(String.format("File: %s does not exist.", f.getName()));
          */
-
+        if(!f.exists()){
+            throw new FileNotFoundException();
+        }
+        this.f = f;
+        this.skipWhiteSpace = skipWhiteSpace;
+        this.numChars = 0;
+        this.numLines = 0;
+        this.numWords = 0;
         // Initialize FileStats' instance variables.
     }
 
@@ -49,13 +57,20 @@ public class FileStats {
     // This method should take a line and count the number of characters in that line.
     private static int countChars(String line, boolean skipWhiteSpace) {
         // 1. If skipWhiteSpace is true, use the removeSpaces method to remove whitespace from the line.
-
+        if (skipWhiteSpace) {
+            line = removeSpaces(line);
+        }
         // 2. Now write a loop to count the number of characters in the line.
         //    a. HINT: to get the length of a String, use its .length() method!
-
+        int charCount = line.length();
         // 3. Return the count of characters.
         //    a. HINT: If whitespace isn't being skipped, a newline character (i.e. \n) counts as a character.
+        if (!skipWhiteSpace) {
+            charCount++;
+        }
+        return charCount;
     }
+
 
     // An overloaded method for the read method you will be writing!
     public void read(File f) throws FileNotFoundException, IOException {
@@ -73,11 +88,18 @@ public class FileStats {
         //    to its buffering mechanisms.
         //    a. HINT: BufferReader's Constructor takes another Reader as an argument. Consider FileReader
         //    b. REF: https://www.geeksforgeeks.org/java-io-bufferedreader-class-java/
-
+BufferedReader br = new BufferedReader(new FileReader(this.f));
         // 2. Create a loop that uses your BufferedReader object to read the contents of your File object line-by-line
         //    and within the loop count the file's lines, words, and characters. Store them in the FileStats class's
         //    instance variables, so you can retrieve them in your main method.
         //    a. HINT: BufferedReader has a readLine method!!!
+    String line;
+    while ((line = br.readLine()) != null) {
+        this.numChars += countChars(line, this.skipWhiteSpace);
+        this.numLines ++;
+        this.numWords += countWords(line);
+    }
+
     }
 
     public int getNumLines() {
